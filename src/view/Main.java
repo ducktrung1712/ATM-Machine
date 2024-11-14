@@ -161,17 +161,7 @@ public class Main extends javax.swing.JFrame {
     }
        
     }//GEN-LAST:event_btnNapActionPerformed
-    public void updateBalance() {
-        if (customer != null) {
-            // Lấy số dư từ CustomerModel
-            double balance = customerModel.getBalance(customer.getCustomerId());
-            // Định dạng lại số dư với dấu phẩy để ngắt nhóm hàng nghìn
-            String balanceFormatted = String.format("%,.0f VND", balance);
-            System.out.println("Số dư hiện tại: " + balanceFormatted);
-        } else {
-            System.out.println("Customer object is null.");
-        }
-    }
+
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
