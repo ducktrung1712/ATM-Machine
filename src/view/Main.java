@@ -5,6 +5,7 @@
 package view;
 
 import entity.Customer;
+import model.CustomerModel;
 
 /**
  *
@@ -13,6 +14,7 @@ import entity.Customer;
 public class Main extends javax.swing.JFrame {
 
     private Customer customer;
+    private CustomerModel customerModel;
 
     /**
      * Creates new form Main
@@ -161,8 +163,11 @@ public class Main extends javax.swing.JFrame {
     }//GEN-LAST:event_btnNapActionPerformed
     public void updateBalance() {
         if (customer != null) {
+            // Lấy số dư từ CustomerModel
+            double balance = customerModel.getBalance(customer.getCustomerId());
             // Định dạng lại số dư với dấu phẩy để ngắt nhóm hàng nghìn
-            String balanceFormatted = String.format("%,.0f VND", customer.getBalance());
+            String balanceFormatted = String.format("%,.0f VND", balance);
+            System.out.println("Số dư hiện tại: " + balanceFormatted);
         } else {
             System.out.println("Customer object is null.");
         }

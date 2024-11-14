@@ -21,17 +21,17 @@ public class Amount extends javax.swing.JFrame {
      * Creates new form Amount
      */
    public Amount(Customer customer, boolean isDeposit) {
-    initComponents();
-    setLocationRelativeTo(null);
-    this.customer = customer;
-    this.isDeposit = isDeposit;  // Lưu thông tin nạp/rút
-    this.customerController = new CustomerController();
-    // Thiết lập tiêu đề giao diện tùy vào chức năng
-    if (isDeposit) {
-        setTitle("Nạp tiền");
-    } else {
-        setTitle("Rút tiền");
-    }
+        initComponents();
+        setLocationRelativeTo(null);
+        this.customer = customer;
+        this.isDeposit = isDeposit;  // Lưu thông tin nạp/rút
+        this.customerController = new CustomerController();
+        // Thiết lập tiêu đề giao diện tùy vào chức năng
+        if (isDeposit) {
+            setTitle("Nạp tiền");
+        } else {
+            setTitle("Rút tiền");
+        }
 }
 
     /**
@@ -111,8 +111,8 @@ public class Amount extends javax.swing.JFrame {
     private void btnXacnhanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXacnhanActionPerformed
         try {
             double amount = Double.parseDouble(txtSotien.getText());
-            if (amount <= 0) {
-                JOptionPane.showMessageDialog(this, "Số tiền phải lớn hơn 0.");
+            if (amount < 10000) {
+                JOptionPane.showMessageDialog(this, "Số tiền phải lớn hơn 10.000.");
                 return;
             }
 
@@ -127,7 +127,7 @@ public class Amount extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(this, "Giao dịch thành công!");
                 Main mainView = new Main(customer);
                 mainView.setVisible(true);
-                mainView.updateBalance();
+                
                 this.dispose();
             } else {
                 JOptionPane.showMessageDialog(this, "Giao dịch không thành công!");

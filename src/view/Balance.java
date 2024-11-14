@@ -5,6 +5,7 @@
 package view;
 
 import entity.Customer;
+import model.CustomerModel;
 
 /**
  *
@@ -25,7 +26,9 @@ public class Balance extends javax.swing.JFrame {
     }
      public void updateBalance() {
         if (customer != null) {
-            String balanceFormatted = String.format("%,.0f VND", customer.getBalance());
+            CustomerModel customerModel = new CustomerModel();
+            double balance = customerModel.getBalance(customer.getCustomerId());
+            String balanceFormatted = String.format("%,.0f VND", balance);
             lbSodu.setText("Số dư: " + balanceFormatted);
         } else {
             lbSodu.setText("Error: Customer not found");
