@@ -7,6 +7,7 @@ package view;
 import entity.Customer;
 import controller.CustomerController;
 import javax.swing.JOptionPane;
+import javax.swing.JPasswordField;
 
 /**
  *
@@ -110,31 +111,47 @@ public class Amount extends javax.swing.JFrame {
 
     private void btnXacnhanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXacnhanActionPerformed
         try {
-            double amount = Double.parseDouble(txtSotien.getText());
-            if (amount < 10000) {
-                JOptionPane.showMessageDialog(this, "Số tiền phải lớn hơn 10.000.");
-                return;
-            }
-
-            boolean success = false;
-            if (isDeposit) {
-                success = customerController.deposit(customer, amount);
-            } else {
-                success = customerController.withdraw(customer, amount);
-            }
-
-            if (success) {
-                JOptionPane.showMessageDialog(this, "Giao dịch thành công!");
-                Main mainView = new Main(customer);
-                mainView.setVisible(true);
-                
-                this.dispose();
-            } else {
-                JOptionPane.showMessageDialog(this, "Giao dịch không thành công!");
-            }
-        } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(this, "Vui lòng nhập số tiền hợp lệ.");
+        double amount = Double.parseDouble(txtSotien.getText());
+        if (amount < 10000) {
+            JOptionPane.showMessageDialog(this, "Số tiền phải lớn hơn 10.000.");
+            return;
         }
+
+        // Hộp thoại yêu cầu nhập mã pin
+        JPasswordField pf = new JPasswordField();
+        int okCxl = JOptionPane.showConfirmDialog(this, pf, "Vui lòng nhập mã pin của bạn:", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
+
+        if (okCxl != JOptionPane.OK_OPTION) {
+            return;
+        }
+
+        String pin = new String(pf.getPassword());
+
+        // Xác thực mã pin
+        if (pin.isEmpty() || !customerController.validatePin(customer, pin)) {
+            JOptionPane.showMessageDialog(this, "Mã pin không đúng.");
+            return;
+        }
+
+        boolean success = false;
+        if (isDeposit) {
+            success = customerController.deposit(customer, amount);
+        } else {
+            success = customerController.withdraw(customer, amount);
+        }
+
+        if (success) {
+            JOptionPane.showMessageDialog(this, "Giao dịch thành công!");
+            Main mainView = new Main(customer);
+            mainView.setVisible(true);
+            
+            this.dispose();
+        } else {
+            JOptionPane.showMessageDialog(this, "Giao dịch không thành công!");
+        }
+    } catch (NumberFormatException e) {
+        JOptionPane.showMessageDialog(this, "Vui lòng nhập số tiền hợp lệ.");
+    }
     }//GEN-LAST:event_btnXacnhanActionPerformed
 
     private void btnTrolaiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTrolaiActionPerformed

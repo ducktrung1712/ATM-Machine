@@ -54,7 +54,7 @@ public class CustomerModel {
 }
 
 // Phương thức rút tiền
-public boolean withdraw(int customerId, double amount) {
+    public boolean withdraw(int customerId, double amount) {
     String sql = "UPDATE account SET balance = balance - ? WHERE customer_id = ? AND balance >= ?";
     try (Connection connection = MySQLConnection.getConnection();
          PreparedStatement statement = connection.prepareStatement(sql)) {
@@ -68,7 +68,7 @@ public boolean withdraw(int customerId, double amount) {
     }
     return false;
 }
-public double getBalance(int customerId) {
+    public double getBalance(int customerId) {
         String sql = "SELECT balance FROM account WHERE customer_id = ?";
         try (Connection connection = MySQLConnection.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
@@ -82,6 +82,21 @@ public double getBalance(int customerId) {
         }
         return 0;
     }
-    
+    // Phương thức kiểm tra mã pin
+    public boolean validatePin(int customerId, String pin) {
+        String sql = "SELECT COUNT(*) FROM account WHERE customer_id = ? AND pin = ?";
+        try (Connection connection = MySQLConnection.getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setInt(1, customerId);
+            statement.setString(2, pin);
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                return resultSet.getInt(1) > 0;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
 }
 

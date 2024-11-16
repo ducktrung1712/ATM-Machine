@@ -24,4 +24,8 @@ public class CustomerController {
     public boolean withdraw(Customer customer, double amount) {
         return customerModel.withdraw(customer.getCustomerId(), amount);
     }
+    // Phương thức kiểm tra mã pin
+    public boolean validatePin(Customer customer, String pin) {
+        return customerModel.validatePin(customer.getCustomerId(), pin);
+    }
 }

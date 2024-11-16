@@ -156,7 +156,7 @@ public class Main extends javax.swing.JFrame {
         this.dispose();
         Amount amountView = new Amount(customer, true);  // true cho nạp tiền
         amountView.setVisible(true);
-    } else {
+        } else {
         System.out.println("Customer object is null.");
     }
        
